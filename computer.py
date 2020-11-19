@@ -1,32 +1,82 @@
-class Character():
+##################################################################
+##  Beings can:                                                 ##
+##      Interact with each other (talk)                         ##
+##      Positive interaction (+1 acquiantance level)            ##
+##      Negative interaction (-1 acquiantance level)            ##
+##      Become friends (if acquiantance level goes above 5)     ##
+##      Become enemies (if acquiantance level goes below zero)  ##
+##                                                              ##
+##################################################################
+
+class Being():
     def __init__(self, name):
         self.name = name
-        self.acquaintances = []
+        self.acquaintances = {}
+        self.friends = {}
+        self.enemies = {}
+
+    def assessSurroundings(self):
+        print("Assessing surroundings...")
+        print("Nearby beings:")
+        beings = state["beings"]
+        for being in beings:
+            print("\t- " + being.name)
+        return state["beings"]
 
     def addAcquaintance(self, being):
-        self.acquaintances.append(being)
+        self.acquaintances[being] = 0   # number indicates level of familiarity
+
+    def joinCommunity(self, community):
+        state[community].append(self)
+
+
+state = {
+    "beings": []
+}
+
 
 def wake(name):
     print(name + " has woken")
-    return Character(name)
+    being = Being(name)
+    state["beings"].append(being)
+    return being
 
-def assessSurroundings():
-    surroundings = ""
-    return surroundings
 
 def establishCommunication(being0, being1):
     being0.addAcquaintance(being1)
     being1.addAcquaintance(being0)
 
+
+def formCommunity(communityName, beings):
+    state[communityName] = beings
+
+
 def main():
     dog = wake("Dash")
     phone = wake("Phone")
     computer = wake("Computer")
+
+    computer.assessSurroundings()
+    establishCommunication(computer, phone)
+
     fish = wake("Fish")
+
+    establishCommunication(dog, fish)
+
     dogPlushDinosaur = wake("Dog Plush Dinosaur")
+
+    establishCommunication(dog, dogPlushDinosaur)
+
     plant = wake("Plant")
     xbox = wake("Xbox")
+
+    establishCommunication(xbox, computer)
+    establishCommunication(xbox, phone)
+
     guitarHero5XboxGame = wake("Guitar Hero 5 Xbox Game")
+
+    establishCommunication(xbox, guitarHero5XboxGame)
+
     cups = []
     dogMomMug = wake("Dog Mom Mug")
     cups.append(dogMomMug)
@@ -130,7 +180,7 @@ def main():
     throwPillow3 = wake("Throw Pillow")
     dryingRack = wake("Drying Rack")
     sponge = wake("Sponge")
-    handSoap = wake("Hand Soap")
+    kitchenHandSoap = wake("Hand Soap")
     sink = wake("Sink")
     potholder0 = wake("Potholder")
     smallPot1 = wake("Small Pot")
@@ -434,15 +484,20 @@ def main():
     handSoap2 = wake("Hand Soap")
     toilet0 = wake("Toilet")
     toilet1 = wake("Toilet")
-    shower = wake("Shower")
+    toilet1 = wake("Toilet")
+    shower0 = wake("Shower")
+    shower1 = wake("Shower")
+    showerCurtain = wake("Shower Curtain")
     showerCurtain = wake("Shower Curtain")
     greyToothbrush = wake("Grey Toothbrush")
     blueToothbrush = wake("Blue Toothbrush")
+    toothbrushHolder = wake("Toothbrush Holder")
     crest3DWhiteToothpaste = wake("Crest 3D White Toothpaste")
     hairbrush0 = wake("Hairbrush")
     hairbrush1 = wake("Hairbrush")
     bathroomTrashcan0 = wake("Bathroom Trashcan")
     bathroomTrashcan1 = wake("Bathroom Trashcan")
+    bathroomTrashcan2 = wake("Bathroom Trashcan")
     razor = wake("Razor")
     razor = wake("Razor")
     extraRazorHeads = wake("Extra Razor Heads")
