@@ -9,6 +9,7 @@
 ##################################################################
 
 class Being():
+
     def __init__(self, name):
         self.name = name
         self.acquaintances = {}
@@ -24,7 +25,10 @@ class Being():
         return state["beings"]
 
     def addAcquaintance(self, being):
-        self.acquaintances[being] = 0   # number indicates level of familiarity
+        self.acquaintances[being] = {
+            "relationship": "ACQUAINTANCE",
+            "level": 0
+        }
 
     def joinCommunity(self, community):
         state[community].append(self)
@@ -47,6 +51,23 @@ def establishCommunication(being0, being1):
     being1.addAcquaintance(being0)
 
 
+def positiveInteraction(being0, being1):
+    being0.acquaintances[being1]["level"] += 1
+    being1.acquaintances[being0]["level"] += 1
+    level = being0.acquaintances[being1]["level"]
+    if level > 5:
+        being0.acquaintances[being1]["relationship"] = "FRIEND"
+    elif level < 0:
+        being0.acquaintances[being1]["relationship"] = "ENEMY"
+    elif level >= 0 and level <= 5:
+        being0.acquaintances[being1]["relationship"] = "ACQUANTANCE"
+
+
+def negativeInteraction(being0, being1):
+    being0.acquaintances[being1] -= 1
+    being1.acquaintances[being0] -= 1
+
+
 def formCommunity(communityName, beings):
     state[communityName] = beings
 
@@ -63,9 +84,20 @@ def main():
 
     establishCommunication(dog, fish)
 
+    
+
     dogPlushDinosaur = wake("Dog Plush Dinosaur")
 
     establishCommunication(dog, dogPlushDinosaur)
+
+    toyElephant = wake("Elephant")
+
+    establishCommunication(toyElephant, dogPlushDinosaur)
+
+    toyBear = wake("Bear")
+
+    establishCommunication(toyBear, toyElephant)
+    establishCommunication(toyBear, dogPlushDinosaur)
 
     plant = wake("Plant")
     xbox = wake("Xbox")
@@ -80,17 +112,23 @@ def main():
     cups = []
     dogMomMug = wake("Dog Mom Mug")
     cups.append(dogMomMug)
-    toyElephant = wake("Elephant")
+    
+    cableBox = wake("Cable Box")
+
+    establishCommunication(cableBox, computer)
+    establishCommunication(cableBox, phone)
+    establishCommunication(cableBox, xbox)
+
+
+
+    guitarHeroSmashHitsXboxGame = wake("Guitar Hero Smash Hits Xbox Game")
+    toyTrain = wake("Toy Train")
+    toyBlanket = wake("Blanket")
     wineGlass0 = wake("Wine Glass")
     cups.append(wineGlass0)
-    guitarHeroSmashHitsXboxGame = wake("Guitar Hero Smash Hits Xbox Game")
-    toyBear = wake("Bear")
+    bentMetalStraw = wake("Bent Metal Straw")
     wineGlass1 = wake("Wine Glass")
     cups.append(wineGlass1)
-    cableBox = wake("Cable Box")
-    toyTrain = wake("Toy Train")
-    bentMetalStraw = wake("Bent Metal Straw")
-    toyBlanket = wake("Blanket")
     UNDMug = wake("University of Notre Dame Mug")
     cups.append(UNDMug)
     justDance2014XboxGame = wake("Just Dance 2014 Xbox Game")
