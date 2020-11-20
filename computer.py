@@ -12,7 +12,7 @@ class Being():
 
     def __init__(self, name):
         self.name = name
-        self.acquaintances = {}
+        self.connections = {}
         self.friends = {}
         self.enemies = {}
 
@@ -24,8 +24,8 @@ class Being():
             print("\t- " + being.name)
         return state["beings"]
 
-    def addAcquaintance(self, being):
-        self.acquaintances[being] = {
+    def addConnection(self, being):
+        self.connections[being] = {
             "relationship": "ACQUAINTANCE",
             "level": 0
         }
@@ -47,25 +47,35 @@ def wake(name):
 
 
 def establishCommunication(being0, being1):
-    being0.addAcquaintance(being1)
-    being1.addAcquaintance(being0)
+    being0.addConnection(being1)
+    being1.addConnection(being0)
+
+
+def assessRelationship(being0, being1):
+    level = being0.connections[being1]["level"]
+    print(level)
+    if level > 5:
+        being0.connections[being1]["relationship"] = "FRIEND"
+        being1.connections[being0]["relationship"] = "FRIEND"
+    elif level < -2:
+        being0.connections[being1]["relationship"] = "ENEMY"
+        being1.connections[being0]["relationship"] = "ENEMY"
+    else:
+        being0.connections[being1]["relationship"] = "ACQUAINTANCE"
+        being1.connections[being0]["relationship"] = "ACQUAINTANCE"
+    print()
 
 
 def positiveInteraction(being0, being1):
-    being0.acquaintances[being1]["level"] += 1
-    being1.acquaintances[being0]["level"] += 1
-    level = being0.acquaintances[being1]["level"]
-    if level > 5:
-        being0.acquaintances[being1]["relationship"] = "FRIEND"
-    elif level < 0:
-        being0.acquaintances[being1]["relationship"] = "ENEMY"
-    elif level >= 0 and level <= 5:
-        being0.acquaintances[being1]["relationship"] = "ACQUANTANCE"
+    being0.connections[being1]["level"] += 1
+    being1.connections[being0]["level"] += 1
+    assessRelationship(being0, being1)
 
 
 def negativeInteraction(being0, being1):
-    being0.acquaintances[being1] -= 1
-    being1.acquaintances[being0] -= 1
+    being0.connections[being1]["level"] -= 1
+    being1.connections[being0]["level"] -= 1
+    assessRelationship(being0, being1)
 
 
 def formCommunity(communityName, beings):
@@ -84,58 +94,95 @@ def main():
 
     establishCommunication(dog, fish)
 
-    
-
     dogPlushDinosaur = wake("Dog Plush Dinosaur")
 
     establishCommunication(dog, dogPlushDinosaur)
 
     toyElephant = wake("Elephant")
+    toyBear = wake("Bear")
 
     establishCommunication(toyElephant, dogPlushDinosaur)
 
-    toyBear = wake("Bear")
+    plant = wake("Plant")
 
     establishCommunication(toyBear, toyElephant)
-    establishCommunication(toyBear, dogPlushDinosaur)
+    positiveInteraction(phone, computer)
 
-    plant = wake("Plant")
     xbox = wake("Xbox")
 
     establishCommunication(xbox, computer)
     establishCommunication(xbox, phone)
 
+    establishCommunication(toyBear, dogPlushDinosaur)
+
+    negativeInteraction(phone, computer)
+    positiveInteraction(computer, xbox)
+
     guitarHero5XboxGame = wake("Guitar Hero 5 Xbox Game")
 
-    establishCommunication(xbox, guitarHero5XboxGame)
+    positiveInteraction(phone, xbox)
+    positiveInteraction(computer, phone)
 
     cups = []
     dogMomMug = wake("Dog Mom Mug")
     cups.append(dogMomMug)
     
+    positiveInteraction(dog, fish)
+
+    establishCommunication(xbox, guitarHero5XboxGame)
+    negativeInteraction(xbox, guitarHero5XboxGame)
+
     cableBox = wake("Cable Box")
 
     establishCommunication(cableBox, computer)
     establishCommunication(cableBox, phone)
+
+    positiveInteraction(phone, computer)
+    
     establishCommunication(cableBox, xbox)
 
-
-
     guitarHeroSmashHitsXboxGame = wake("Guitar Hero Smash Hits Xbox Game")
+
     toyTrain = wake("Toy Train")
+    
+    establishCommunication(guitarHeroSmashHitsXboxGame, xbox)
+
     toyBlanket = wake("Blanket")
+
+    establishCommunication(toyTrain, dogPlushDinosaur)
+
     wineGlass0 = wake("Wine Glass")
     cups.append(wineGlass0)
+
+    establishCommunication(toyTrain, toyElephant)
+
     bentMetalStraw = wake("Bent Metal Straw")
+
+    establishCommunication(toyTrain, toyBear)
+    establishCommunication(toyBlanket, toyElephant)
+
+    establishCommunication(toyBlanket, dogPlushDinosaur)
+
+
+
     wineGlass1 = wake("Wine Glass")
+
+    establishCommunication(wineGlass0, wineGlass1)
+
     cups.append(wineGlass1)
     UNDMug = wake("University of Notre Dame Mug")
     cups.append(UNDMug)
     justDance2014XboxGame = wake("Just Dance 2014 Xbox Game")
     minecraftXboxGame = wake("Minecraft Xbox Game")
     dogAlligatorToy = wake("Dog Alligator Toy")
+
+    positiveInteraction(wineGlass0, wineGlass1)
+
     wineGlass2 = wake("Wine Glass")
     cups.append(wineGlass2)
+
+    positiveInteraction(computer, phone)
+    
     GTAVXboxGame = wake("GTA V Xbox Game")
     starWarsMug = wake("Star Wars Mug")
     cups.append(starWarsMug)
@@ -146,17 +193,37 @@ def main():
     guitarHeroWorldTourXboxGame = wake("Guitar Hero World Tour Xbox Game")
     stemlessWineGlass0 = wake("Stemless Wine Glass")
     cups.append(stemlessWineGlass0)
-    television = wake("TV")
+    
+    tv = wake("TV")
+
+    establishCommunication(tv, cableBox)
+
     dallasMug = wake("Dallas Mug")
     cups.append(dallasMug)
+    
     callOfDutyMW3XboxGame = wake("Call of Duty MW3 Xbox Game")
+    
+    establishCommunication(tv, computer)
+    
     dogPlushCarrot = wake("Dog Plush Carrot")
+    
+    establishCommunication(tv, phone)
+    
     stemlessWineGlass1 = wake("Stemless Wine Glass")
     cups.append(stemlessWineGlass1)
-    leechLakeMug = wake("LeechLakeMug")
+    leechLakeMug = wake("Leech Lake Mug")
     cups.append(leechLakeMug)
+
+    establishCommunication(tv, xbox)
+
     dogPlushMonkey = wake("Dog Plush Monkey")
     fallout4XboxGame = wake("Fallout 4 Xbox Game")
+
+    establishCommunication(tv, xboxController0)
+    establishCommunication(tv, xboxController1)
+
+    electronicsCommunity = [computer, phone, xbox, cableBox, tv, xboxController0, xboxController1]
+
     stemlessWineGlass2 = wake("Stemless Wine Glass")
     cups.append(stemlessWineGlass2)
     keurig = wake("Keurig")
@@ -165,6 +232,9 @@ def main():
     maddenXboxGame = wake("Madden Xbox Game")
     stemlessWineGlass3 = wake("Stemless Wine Glass")
     cups.append(stemlessWineGlass3)
+
+    negativeInteraction(computer, phone)
+    
     dogDuraforce = wake("Duraforce")
     halo5XboxGame = wake("Halo 5 Xbox Game")
     tvRemote = wake("TV Remote")
@@ -173,7 +243,7 @@ def main():
     seaofThievesXboxGame = wake("Sea of Thieves Xbox Game")
     callOfDutyAdvancedWarfareXboxGame = wake("Call of Duty Advanced Warfare Xbox Game")
     pastaMaker = wake("Pasta Maker")
-    legoStarWarsIIXboxGame = wake("lego Star Wars II Xbox Game")
+    legoStarWarsIIXboxGame = wake("Lego Star Wars II Xbox Game")
     dogKong = wake("Kong")
     loveseat = wake("Loveseat")
     iceCreamScoop = wake("Ice Cream Scoop")
@@ -197,6 +267,9 @@ def main():
     bottleOpener = wake("Bottle Opener")
     crockpot = wake("Crockpot")
     spatula0 = wake("Spatula")
+
+    positiveInteraction(phone, computer)
+
     oven = wake("Oven")
     mediumPot1 = wake("Medium Pot")
     christmasOvenMitt = wake("Christmas Oven Mitt")
@@ -221,12 +294,18 @@ def main():
     kitchenHandSoap = wake("Hand Soap")
     sink = wake("Sink")
     potholder0 = wake("Potholder")
+    
+    positiveInteraction(wineGlass1, wineGlass0)
+    
     smallPot1 = wake("Small Pot")
     knives = []
     chefsKnife = wake("Chef's Knife")
     knives.append(chefsKnife)
     unicornWineStopper = wake("Unicorn Wine Stopper")
     pastaDryingRack = wake("Pasta Drying Rack")
+
+    negativeInteraction(xbox, guitarHero5XboxGame)
+    
     servingSpoon1 = wake("Serving Spoon")
     spoons.append(servingSpoon1)
     rug = wake("Rug")
@@ -240,6 +319,9 @@ def main():
     serratedKnife = wake("Serrated Knife")
     knives.append(serratedKnife)
     navyWineStopper = wake("Navy Wine Stopper")
+
+    negativeInteraction(computer, phone)
+
     blanket0 = wake("Blanket")
     tablespoon = wake("Tablespoon")
     blanket1 = wake("Blanket")
@@ -259,6 +341,9 @@ def main():
     knives.append(slicingKnife)
     kitchenHandTowel1 = wake("Kitchen Hand Towel")
     knifeBlock = wake("Knife Block")
+
+    negativeInteraction(phone, computer)
+
     quarterCupMeasuringCup = wake("Quarter Cup Measuring Cup")
     rubberJarOpener = wake("Rubber Jar Opener")
     seasonalPlacemat0 = wake("Seasonal Placemat")
@@ -271,6 +356,9 @@ def main():
     lamp1 = wake("Lamp")
     chair2 = wake("Chair")
     gallonZiplockBags = wake("Gallon Ziplock Bags")
+    
+    positiveInteraction(wineGlass1, wineGlass0)
+    
     saranWrap = wake("Saran Wrap")
     tomatoKnife = wake("Tomato Knife")
     knives.append(tomatoKnife)
@@ -306,6 +394,9 @@ def main():
     knives.append(steakKnife2)
     dunkinDonutsCoffeePod3 = wake("Dunkin' Donuts Coffee Pod")
     largeFork2 = wake("Large Fork")
+
+    negativeInteraction(phone, computer)
+
     forks.append(largeFork2)
     tallCup1 = wake("Tall Cup")
     cups.append(tallCup1)
@@ -342,6 +433,8 @@ def main():
     chair3 = wake("Chair")
     largeFork6 = wake("Large Fork")
     forks.append(largeFork6)
+
+    positiveInteraction(phone, computer)
     utilityKnife = wake("Utility Knife")
     smallFork2 = wake("Small Fork")
     forks.append(smallFork2)
@@ -354,6 +447,9 @@ def main():
     largeSpoon1 = wake("Large Spoon")
     spoons.append(largeSpoon1)
     dunkinDonutsCoffeePod8 = wake("Dunkin' Donuts Coffee Pod")
+    
+    negativeInteraction(xbox, guitarHero5XboxGame)
+    
     largeFork8 = wake("Large Fork")
     placemat3 = wake("Placemat")
     forks.append(largeFork8)
@@ -373,6 +469,9 @@ def main():
     knives.append(steakKnife5)
     knife2 = wake("Knife")
     knives.append(knife2)
+    
+    negativeInteraction(wineGlass1, wineGlass0)
+    
     canOpener = wake("Can Opener")
     steakKnife6 = wake("Steak Knife")
     knives.append(steakKnife6)
@@ -390,12 +489,18 @@ def main():
     dunkinDonutsCoffeePod13 = wake("Dunkin' Donuts Coffee Pod")
     knife3 = wake("Knife")
     knives.append(knife3)
+    
+    positiveInteraction(wineGlass0, wineGlass1)
+    
     smallFork4 = wake("Small Fork")
     forks.append(smallFork4)
     dunkinDonutsCoffeePod14 = wake("Dunkin' Donuts Coffee Pod")
     smallFork5 = wake("Small Fork")
     forks.append(smallFork5)
     bowl1 = wake("Bowl")
+
+    positiveInteraction(phone, computer)
+
     bowls.append(bowl1)
     dunkinDonutsCoffeePod15 = wake("Dunkin' Donuts Coffee Pod")
     smallFork6 = wake("Small Fork")
@@ -410,6 +515,9 @@ def main():
     forks.append(smallFork9)
     dunkinDonutsCoffeePod17 = wake("Dunkin' Donuts Coffee Pod")
     smallPlate2 = wake("Small Plate")
+    
+    negativeInteraction(xbox, guitarHero5XboxGame)
+    
     plates.append(smallPlate2)
     knife4 = wake("Knife")
     knives.append(knife4)
@@ -458,12 +566,18 @@ def main():
     smallSpoon5 = wake("Small Spoon")
     spoons.append(smallSpoon5)
     dunkinDonutsCoffeePod30 = wake("Dunkin' Donuts Coffee Pod")
+    
+    negativeInteraction(xbox, guitarHero5XboxGame)
+    
     smallSpoon6 = wake("Small Spoon")
     spoons.append(smallSpoon6)
     smallSpoon7 = wake("Small Spoon")
     spoons.append(smallSpoon7)
     dunkinDonutsCoffeePod31 = wake("Dunkin' Donuts Coffee Pod")
     smallSpoon8 = wake("Small Spoon")
+
+    positiveInteraction(computer, phone)
+
     spoons.append(smallSpoon8)
     dunkinDonutsCoffeePod32 = wake("Dunkin' Donuts Coffee Pod")
     smallSpoon9 = wake("Small Spoon")
@@ -475,6 +589,9 @@ def main():
     cups.append(smallCup3)
     dunkinDonutsCoffeePod34 = wake("Dunkin' Donuts Coffee Pod")
     tallCup2 = wake("Tall Cup")
+    
+    negativeInteraction(wineGlass1, wineGlass0)
+    
     cups.append(tallCup2)
     tallCup3 = wake("Tall Cup")
     cups.append(tallCup3)
@@ -490,11 +607,20 @@ def main():
     plates.append(largePlate2)
     dunkinDonutsCoffeePod38 = wake("Dunkin' Donuts Coffee Pod")
     largePlate3 = wake("Large Plate")
+
+    positiveInteraction(computer, phone)
+
     plates.append(largePlate3)
     dunkinDonutsCoffeePod39 = wake("Dunkin' Donuts Coffee Pod")
     largePlate4 = wake("Large Plate")
+    
+    positiveInteraction(wineGlass1, wineGlass0)
+
     plates.append(largePlate4)
     bowl3 = wake("Bowl")
+    
+    negativeInteraction(xbox, guitarHero5XboxGame)
+    
     bowls.append(bowl3)
     bowl4 = wake("Bowl")
     bowls.append(bowl4)
@@ -594,7 +720,25 @@ def main():
     herbalEssencesConditioner = wake("Herbal Essences Conditioner")
     suave3in1ShampooConditionerBody = wake("Suave 3-in-1 Shampoo Conditioner Body")
 
+    print("\n\nRELATIONSHIPS:")
+    for being in state["beings"]:
+        if being.connections == {}:
+            continue
+        print(being.name + "'s connections: ")
+        for connection in being.connections:
+            relationship = being.connections[connection]["relationship"]
+            if relationship == "FRIEND" or relationship == "ENEMY":
+                relationship += "\t"        # for alignment purposes
+            print("\t" + relationship + "\t" + str(being.connections[connection]["level"]) + "\t" + connection.name)
 
+    print("\n\nCOMMUNITIES:")
+    if len(state) > 1:
+        for community in state:
+            if community == "beings":
+                continue
+            print(community + "'s members:")
+            for being in state[community]:
+                print("\t" + being)
 
 if __name__ == '__main__':
     main()
