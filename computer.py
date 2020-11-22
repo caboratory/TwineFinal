@@ -105,6 +105,8 @@ def main():
 
     plant = wake("Plant")
 
+    positiveInteraction(dog, fish)
+
     establishCommunication(toyBear, toyElephant)
     positiveInteraction(phone, computer)
 
@@ -181,6 +183,8 @@ def main():
     wineGlass2 = wake("Wine Glass")
     cups.append(wineGlass2)
 
+    negativeInteraction(fish, dog)
+
     positiveInteraction(computer, phone)
     
     GTAVXboxGame = wake("GTA V Xbox Game")
@@ -222,8 +226,12 @@ def main():
     establishCommunication(tv, xboxController0)
     establishCommunication(tv, xboxController1)
 
-    electronicsCommunity = [computer, phone, xbox, cableBox, tv, xboxController0, xboxController1]
+    positiveInteraction(dog, fish)
 
+    electronicsCommunity = [computer, phone, xbox, cableBox, tv, xboxController0, xboxController1]
+    formCommunity("Electronics", electronicsCommunity)
+
+    house = wake("House")
     stemlessWineGlass2 = wake("Stemless Wine Glass")
     cups.append(stemlessWineGlass2)
     keurig = wake("Keurig")
@@ -266,6 +274,9 @@ def main():
     fridge = wake("Fridge")
     bottleOpener = wake("Bottle Opener")
     crockpot = wake("Crockpot")
+
+    positiveInteraction(dog, fish)
+
     spatula0 = wake("Spatula")
 
     positiveInteraction(phone, computer)
@@ -305,6 +316,7 @@ def main():
     pastaDryingRack = wake("Pasta Drying Rack")
 
     negativeInteraction(xbox, guitarHero5XboxGame)
+    negativeInteraction(fish, dog)
     
     servingSpoon1 = wake("Serving Spoon")
     spoons.append(servingSpoon1)
@@ -334,6 +346,9 @@ def main():
     chair1 = wake("Chair")
     cloroxWipes = wake("Clorox Wipes")
     teaspoon = wake("Teaspoon")
+
+    positiveInteraction(dog, fish)
+
     windex = wake("Windex")
     standingLamp = wake("Standing Lamp")
     entertainmentCenter = wake("Entertainment Center")
@@ -369,7 +384,6 @@ def main():
     kitchenTrashcan = wake("Kitchen Trashcan")
     seasonalPlacemat2 = wake("Seasonal Placemat")
     coffeePodBasket = wake("CoffeePodBasket")
-    house = wake("House")
     forks = []
     largeFork0 = wake("Large Fork")
     forks.append(largeFork0)
@@ -378,6 +392,9 @@ def main():
     dunkinDonutsCoffeePod0 = wake("Dunkin' Donuts Coffee Pod")
     smallCup0 = wake("Small Cup")
     cups.append(smallCup0)
+
+    positiveInteraction(dog, fish)
+
     dunkinDonutsCoffeePod1 = wake("Dunkin' Donuts Coffee Pod")
     steakKnife1 = wake("Steak Knife")
     knives.append(steakKnife1)
@@ -416,6 +433,9 @@ def main():
     spoons.append(largeSpoon0)
     smallFork0 = wake("Small Fork")
     forks.append(smallFork0)
+
+    positiveInteraction(dog, fish)
+
     largePlate1 = wake("Large Plate")
     plates.append(largePlate1)
     steakKnife3 = wake("Steak Knife")
@@ -479,6 +499,9 @@ def main():
     dunkinDonutsCoffeePod12 = wake("Dunkin' Donuts Coffee Pod")
     smallSpoon1 = wake("Small Spoon")
     spoons.append(smallSpoon1)
+
+    positiveInteraction(dog, fish)
+
     dunkinDonutsCoffeePod11 = wake("Dunkin' Donuts Coffee Pod")
     bowl2 = wake("Bowl")
     bowls.append(bowl2)
@@ -532,6 +555,9 @@ def main():
     knife8 = wake("Knife")
     knives.append(knife8)
     dunkinDonutsCoffeePod20 = wake("Dunkin' Donuts Coffee Pod")
+
+    positiveInteraction(fish, dog)
+    
     knife9 = wake("Knife")
     knives.append(knife9)
     dunkinDonutsCoffeePod21 = wake("Dunkin' Donuts Coffee Pod")
@@ -563,6 +589,9 @@ def main():
     smallSpoon4 = wake("Small Spoon")
     spoons.append(smallSpoon4)
     dunkinDonutsCoffeePod29 = wake("Dunkin' Donuts Coffee Pod")
+    
+    positiveInteraction(dog, fish)
+    
     smallSpoon5 = wake("Small Spoon")
     spoons.append(smallSpoon5)
     dunkinDonutsCoffeePod30 = wake("Dunkin' Donuts Coffee Pod")
@@ -604,10 +633,15 @@ def main():
     largePlate0 = wake("Large Plate")
     plates.append(largePlate0)
     largePlate2 = wake("Large Plate")
+    
+    positiveInteraction(fish, dog)
+    
+    positiveInteraction(dog, fish)
     plates.append(largePlate2)
     dunkinDonutsCoffeePod38 = wake("Dunkin' Donuts Coffee Pod")
     largePlate3 = wake("Large Plate")
 
+    positiveInteraction(dog, fish)
     positiveInteraction(computer, phone)
 
     plates.append(largePlate3)
@@ -624,6 +658,7 @@ def main():
     bowls.append(bowl3)
     bowl4 = wake("Bowl")
     bowls.append(bowl4)
+    positiveInteraction(fish, dog)
     dunkinDonutsCoffeePod40 = wake("Dunkin' Donuts Coffee Pod")
 
     ## REST OF HOUSE ##
@@ -738,7 +773,7 @@ def main():
                 continue
             print(community + "'s members:")
             for being in state[community]:
-                print("\t" + being)
+                print("\t" + being.name)
 
 if __name__ == '__main__':
     main()
